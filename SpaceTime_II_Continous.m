@@ -7,7 +7,7 @@ function [ST_JOINT,ST_COND,ST_S,ST_R,MIs_z_single,...
     %X(EMG) & Z(Contious task variables) are both 3D tensors [Timepoints, Channels,
     %Trials]
 
-%Output
+%Output in the shape [Spatial interactions x [All Timepoint A and B interactions, All Timepoint A and A interactions]]
     %ST_JOINT: Task-relevant muscle activiations across trials
     %ST_COND: Task-irrelevant muscle couplings across trials
     %ST_S: Task-synergistic muscle couplings across trials

@@ -1,5 +1,5 @@
 function [ST_JOINT,ST_COND,ST_S,ST_R,MIs_z_single,...
-   netS_joint,netT_joint,netS_cond,netT_cond,netS_S,netT_S,netS_R,netT_R]=SpaceTime_II_Continous(X,Z)
+   netS_joint,netT_joint,netS_cond,netT_cond,netS_S,netT_S,netS_R,netT_R]=SpaceTime_II_Continuous(X,Z)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -4,7 +4,7 @@ function [ST_JOINT,ST_COND,ST_S,ST_R,MIs_z_single,...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Input
-    %X(EMG) & Z(Contious task variables) are both 3D tensors [Timepoints, Channels,
+    %X(EMG) & Z(Continuous task variables) are both 3D tensors [Timepoints, Channels,
     %Trials]
 
 %Output in the shape [Spatial interactions x [All Timepoint A and B interactions, All Timepoint A and A interactions]]

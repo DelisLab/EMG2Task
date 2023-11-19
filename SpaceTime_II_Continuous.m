@@ -319,7 +319,7 @@ netT_S={};
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         netT_S=cat(2,netT_S,A);
-        st_s2T=cat(2,st_s2T,A(mask));
+        st_sT=cat(2,st_sT,A(mask));
         
         
         

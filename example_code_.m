@@ -74,14 +74,14 @@ Task=%...insert a discrete task variable equal in length to the number of trials
 %interactions where Wi_R, Wb_R and Acal_R are the temporal and spatial
 %modules and activation coefficients respectively.
 
-[Wi_R,Acal_R,Wb_R,TS,VAF,E2]=sNM3F_basic(reshape(ST_R,[size(ST_R,2),size(ST_R,1)*size(ST_R,3)])',Opt_rank_R_SP,Opt_rank_R_TM,size(ST_R,3));
+[Wi_R,Acal_R,Wb_R,TS,VAF,E2]=sNM3F_basic(reshape(ST_R,[size(ST_R,1),size(ST_R,2)*size(ST_R,3)])',Opt_rank_R_SP,Opt_rank_R_TM,size(ST_R,3));
 
 
 %Then extract out the Space-Time modules from the task-synergistic
 %interactions where Wi_S, Wb_S and Acal_S are the temporal and spatial
 %modules and activation coefficients respectively.
 
-[Wi_S,Acal_S,Wb_S,TS,VAF,E2]=sNM3F_basic(reshape(ST_S,[size(ST_S,2),size(ST_S,1)*size(ST_S,3)])',Opt_rank_S_SP,Opt_rank_S_TM,size(ST_S,3));
+[Wi_S,Acal_S,Wb_S,TS,VAF,E2]=sNM3F_basic(reshape(ST_S,[size(ST_S,1),size(ST_S,2)*size(ST_S,3)])',Opt_rank_S_SP,Opt_rank_S_TM,size(ST_S,3));
 
  
 %%Now, to determine muscle interactions in continuous task parameter

@@ -7,7 +7,7 @@ function [ST_JOINT,ST_COND,ST_S,ST_R,MIs_z_single,...
     %X(EMG) & Z(Continuous task variables) are both 3D tensors [Timepoints, Channels,
     %Trials]
 
-%Output in the shape [Spatial interactions x [All Timepoint A and B interactions, All Timepoint A and A interactions]]
+%Output
     %ST_JOINT: Task-relevant muscle activiations across trials
     %ST_COND: Task-irrelevant muscle couplings across trials
     %ST_S: Task-synergistic muscle couplings across trials
@@ -276,22 +276,22 @@ netT_S={};
         A=squareform(MIs_z_joint(i,1:length(combos_t),t));
         d=diag(MIs_z_joint(i,length(combos_t)+1:end,t));
         A=A+d;
-        mask = tril(true(size(A,1)));
+        mask = tril(true(size(A,1)),-1);
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         A(A<0)=0;
         netT_joint=cat(2,netT_joint,A);
-        st_jointT=cat(2,st_jointT,A(mask));
+        st_jointT=cat(2,st_jointT,[A(mask);diag(A)]);
 %         
         A=squareform(MIs_z_cond(i,1:length(combos_t),t));
         d=diag(MIs_z_cond(i,length(combos_t)+1:end,t));
         A=A+d;
-        mask = tril(true(size(A,1)));
+        mask = tril(true(size(A,1)),-1);
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         A(A<0)=0;
         netT_cond=cat(2,netT_cond,A);
-        st_condT=cat(2,st_condT,A(mask));
+        st_condT=cat(2,st_condT,[A(mask);diag(A)]);
         
 %         
 
@@ -302,11 +302,11 @@ netT_S={};
         A=A+d;
         A(A>0)=0;
         A=abs(A);
-        mask = tril(true(size(A,1)));
+        mask = tril(true(size(A,1)),-1);
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         netT_R=cat(2,netT_R,A);
-        st_rT=cat(2,st_rT,A(mask));
+        st_rT=cat(2,st_rT,[A(mask);diag(A)]);
         
 
 %         
@@ -315,11 +315,11 @@ netT_S={};
         d=diag(II(i,length(combos_t)+1:end,t));
         A=A+d;
         A(A<0)=0;
-        mask = tril(true(size(A,1)));
+        mask = tril(true(size(A,1)),-1);
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         netT_S=cat(2,netT_S,A);
-        st_sT=cat(2,st_sT,A(mask));
+        st_sT=cat(2,st_sT,[A(mask);diag(A)]);
         
         
         
@@ -335,7 +335,7 @@ netT_S={};
      
      ST_rT=cat(3,ST_rT,st_rT);
      ST_sS=cat(3,ST_sS,st_sS);
-     ST_sT=cat(3,ST_sT,st_s2T);
+     ST_sT=cat(3,ST_sT,st_sT);
 %     
  end
 % 

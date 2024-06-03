@@ -9,7 +9,7 @@ function [Task_MI,ST_JOINT,ST_R,ST_S,ST_JOINT_netM,ST_JOINT_netT,ST_R_netM,...
 %Z=Matrix of discrete task variables equal in length to size(X,3)...
     %Values must be between [0 - Ym-1] (Ym=Max value in Y)
 
-%Output
+%Output [Configuration = Spatial interactions x Temporal interactions (same timepoint interactions are concatenated to the end of the vector)]
 %Task_MI: Individual Muscle-task encodings
 %ST_JOINT: Task-relevant muscle activations
 %ST_R: Task-redundant muscle couplings
@@ -101,7 +101,7 @@ for zi=1:size(Z,2)
                 I=mi_mixture_gd(copnorm([x_var1,x_var2]), z, max(z)+1);
                 mis=[mis;I];
             catch message
-                mis=[mis;ent_g(copnorm([x_var1,x_var2]),true)];
+                mis=[mis;0];
             end
         end
         
@@ -179,12 +179,12 @@ for i=1:size(Joint_Task_MI,3)
         A=squareform(reshape(Joint_Task_MI(1:length(combos_time),ii,i),[length(combos_time),1]));
         d=diag(reshape(Joint_Task_MI(length(combos_time)+1:end,ii,i),[size(X,1),1]));
         A=A+d;
-        mask = tril(true(size(A,1)));
+        mask = tril(true(size(A,1)),-1);
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         A(A<0)=0;
         ST_JOINT_netT=cat(2,ST_JOINT_netT,A);
-        rep=cat(2,rep,A(mask));
+        rep=cat(2,rep,[A(mask);diag(A)]);
     end
     ST_JOINT_T=cat(3,ST_JOINT_T,rep);
 
@@ -260,12 +260,12 @@ for t=1:size(ST_Redundancy,3)
         A=squareform(reshape(ST_Redundancy(1:length(combos_time),i,t),[1,length(combos_time)]));
         d=diag(reshape(ST_Redundancy(length(combos_time)+1:end,i,t),[1,size(X,1)]));
         A=A+d;
-        mask = tril(true(size(A,1)));
+        mask = tril(true(size(A,1)),-1);
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         A(A<0)=0;
         ST_R_netT=cat(2,ST_R_netT,A);
-        rep=cat(2,rep,A(mask));
+        rep=cat(2,rep,[A(mask);diag(A)]);
     end
     ST_R_T=cat(3,ST_R_T,rep);
     
@@ -274,12 +274,12 @@ for t=1:size(ST_Redundancy,3)
         A=squareform(reshape(ST_Synergy(1:length(combos_time),i,t),[1,length(combos_time)]));
         d=diag(reshape(ST_Synergy(length(combos_time)+1:end,i,t),[1,size(X,1)]));
         A=A+d;
-        mask = tril(true(size(A,1)));
+        mask = tril(true(size(A,1)),-1);
         [threshold] = modified_percolation_analysis(A);
         A(A<threshold)=0;
         A(A<0)=0;
         ST_S_netT=cat(2,ST_S_netT,A);
-        rep=cat(2,rep,A(mask));
+        rep=cat(2,rep,[A(mask);diag(A)]);
     end
     ST_S_T=cat(3,ST_S_T,rep);
     
@@ -305,6 +305,10 @@ for t=1:size(ST_S_T,3)
 end
 ST_S=ST_S_M;
 ST_R=ST_R_M;
+
+
+
+end
 
 
 

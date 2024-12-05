@@ -1,3 +1,7 @@
+%%Processing script for manuscript: Functional muscle networks reveal the mechanistic effects 
+    %of post-stroke rehabilitation on motor impairment and therapeutic responsiveness.
+
+
 clear all;clc;
 currentDir = cd;
 addpath(currentDir);
